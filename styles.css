@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif; margin:0; padding:0; background:#ffffff; }
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  padding: 1em;
+  color: #424242;
+  font-size: 1.2em;
+  font-weight: 550;
+  text-align: center;
+  height: auto;
+  flex-direction: row; /* 좌우 배치 */
+}
+nav { display:flex; justify-content:space-around; background:#003060; }
+nav button { flex:1; padding:1em; color:#fff; background:none; border:none; font-size:1.2em; cursor:pointer; }
+nav button:hover, nav .active { background:#cccccc; }
+
+.tab-content { display:none; padding:0.25em; }
+.active-tab { display:block; }
+
+.back-button {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #424242;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.select-type-container{
+  display:flex; 
+  background-color: #ffffff;
+  gap:1em; 
+  padding:16px;
+}
+.Report-type{
+  display:flex; 
+  flex-direction:column; 
+  align-items:left; 
+  justify-content:center; 
+  gap:1em; 
+  color: #ff4255;
+}
+.alert-btn { width:100%; 
+  font-size:1.2em; 
+  height: 42px;
+  width: 144px;
+  font-weight:bold; 
+  margin:0.5em 0; 
+  padding:0.15em; 
+  border:none; 
+  border-radius:10px; 
+  cursor:pointer; 
+  color:#fff; }
+
+.life-btn { background:#ff4255; }
+.aid-btn  { background:#d5d5d5; color:#131313; }
+
+
+#home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+#map-container {
+  margin-top: 60px;
+  width: 100%;
+  height: 100%; /* 혹은 원하는 높이 */
+  background: lightgray; /* 맵이 없으면 테스트용 배경색 */
+}
+
+
+.popup { 
+  width:95%!important; 
+  max-width:500px!important; 
+  display:flex; 
+  gap:1em;
+  position:fixed; 
+  top:5%; 
+  left:50%; 
+  transform:translateX(-50%);
+  background:#fff; 
+  padding:.5em; 
+  border-radius:12px; 
+  box-shadow:0 0 20px rgba(0,0,0,0.2);
+  z-index:1000; 
+  overflow-y:auto; 
+  max-height:90vh; 
+}
+
+label, select, input { 
+  width:100%; 
+  margin:0.15em 0; 
+  padding:0.15em; 
+  font-size:1em; 
+  border:1px solid #ccc; 
+  border-radius:6px; 
+}
+
+.submit-btn { background:#e04859; color:#fff; }
+.cancel-btn { background:#d4d4d4; color:#272727; }
+
+.submit-btn, .cancel-btn { 
+  margin-top:0.15em; 
+  padding:1em; 
+  font-size:1.1em; 
+  font-weight:bold; 
+  width:100%; 
+  border:none; 
+  border-radius:10px; 
+  cursor:pointer; 
+}
+
+img { width:100%; border-radius:10px; }
+
+.popup-grid { 
+  display:grid; 
+  grid-template-columns:48% 48%; 
+  row-gap:0.15em; 
+  column-gap:4.5%; 
+}
+
+.popup-grid label { 
+  font-weight:bold; 
+  margin-bottom:0.15em; 
+  display:block; 
+}
+
+.popup-grid select { 
+  min-width:140px; 
+}
+
+
+
+
+
+
+/* Emergency Page Styles */
+
+
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+}
+
+.main-buttons button {
+  width: 80%;
+  padding: 1.5em;
+  font-size: 1.5em;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #dadada;
+  color: rgb(36, 36, 36);
+  font-weight: bold;
+}
+.main-buttons button:hover {
+  background-color: #8a8a8a;
+}
+
+
+
+
+.prompt-text {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+  justify-items: center;
+}
+.emergency-section {
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.emergency-title {
+  font-size: 18px;
+  color: #ff4255;
+  margin-bottom: 1em;
+  font-weight: 500;
+  text-align: left;
+}
+
+.emergency-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left; /* 가운데 정렬 */
+  gap: 12px;
+}
+
+.emergency-option {
+  margin-top: 40px;
+  width: 30%; /* 고정 크기 */
+  min-width: 100px;
+  max-width: 120px;
+  border-radius: 100px;
+  text-align: center;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  color: #ff4255;
+  align-items: center;
+  cursor: pointer;
+}
+/* 여기 추가! 아이콘 크기 통일 */
+.emergency-option img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain; /* 혹시 아이콘 비율 깨지는 걸 방지 */
+  margin-bottom: 10px; /* 아이콘과 텍스트 사이 약간 간격 */
+}
+
+.fixed-emergency-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  padding: 16px 0;
+  background-color: #ff4255; /* 빨간색 계열 */
+  color: white;
+  border: none;
+  font-size: 1.1em;
+  font-weight: 550;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1000;
+}
