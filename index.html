@@ -8,14 +8,27 @@
 </head>
 
 <body>
-  <header> 
-    EVENT-AID</header>
+
+  <header>
+    <button class="back-button" onclick="history.back()">
+    <img src="back.svg" alt="Back">
+  </button>
+  <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
+</header>
+
 
   <div class="main-buttons">
     <button onclick="alert('Venue page not ready yet')">Venue</button>
     <button onclick="alert('Map page not ready yet')">Map</button>
     <button onclick="alert('Other page not ready yet')">Other</button>
-    <button onclick="location.href='emergency.html'" style="background-color: #e04859; color: white; margin-top: 40px;">Emergency</button>
+    
   </div>
+
+  <button class="fixed-emergency-btn" onclick="location.href='emergency.html'">
+    <img src="Assets/Voice_left.svg" alt="" class="icon">
+    EMERGENCY
+    <img src="Assets/Voice.svg" alt="" class="icon">
+  </button>
+
 </body>
 </html>

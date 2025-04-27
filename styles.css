@@ -6,16 +6,25 @@ body {
 header {
   display: flex;
   align-items: center;
+  position: fixed;
+  width: 100%;
   justify-content: center;
-  position: relative;
-  border-bottom: 1px solid #ccc;
-  padding: 1em;
+  position: fixed;
+  padding: .5em;
   color: #424242;
+  background-color: #ffffff80;
+  backdrop-filter: blur(10px);
   font-size: 1.2em;
   font-weight: 550;
   text-align: center;
   height: auto;
-  flex-direction: row; /* 좌우 배치 */
+  flex-direction: row; /* 좌우 배치 */ 
+  z-index: 10;
+}
+.logo{
+  width: 200px;
+  height: 50px;
+  margin-right: 20px;
 }
 nav { display:flex; justify-content:space-around; background:#003060; }
 nav button { flex:1; padding:1em; color:#fff; background:none; border:none; font-size:1.2em; cursor:pointer; }
@@ -35,7 +44,6 @@ nav button:hover, nav .active { background:#cccccc; }
   font-size: 1.5em;
   cursor: pointer;
 }
-
 .select-type-container{
   display:flex; 
   background-color: #ffffff;
@@ -77,7 +85,6 @@ nav button:hover, nav .active { background:#cccccc; }
   margin-top: 60px;
   width: 100%;
   height: 100%; /* 혹은 원하는 높이 */
-  background: lightgray; /* 맵이 없으면 테스트용 배경색 */
 }
 
 
@@ -150,34 +157,42 @@ img { width:100%; border-radius:10px; }
 
 
 .main-buttons {
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5em;
+
+ display: flex;
+width: 100%;
+padding-top: 120px;
+height: 75vh;
+flex-direction: column;
+align-items: flex-start;
+gap: 0.75rem;
+justify-content: center; /* 가로 중앙 */
+align-items: center; /* 세로 중앙 */
+
 }
 
 .main-buttons button {
-  width: 80%;
-  padding: 1.5em;
-  font-size: 1.5em;
-  border-radius: 12px;
+  display: flex;
+  width: 75%;
+  padding: 0 1.5em; /* 좌우만 패딩, 높이는 고정 */
+  height: 50px;
+  border-radius: 100px;
   border: none;
   cursor: pointer;
-  background-color: #dadada;
+  background-color: #ffffff;
   color: rgb(36, 36, 36);
-  font-weight: bold;
-}
-.main-buttons button:hover {
-  background-color: #8a8a8a;
-}
+  font-weight: 600;
+  font-size: 20px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 
+  display: flex;
+  align-items: center; /* 텍스트 세로 가운데 정렬 */
+  justify-content: center; /* 텍스트 가로 가운데 정렬 */
+}
 
 
 
 .prompt-text {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   margin-bottom: 1em;
 }
@@ -189,61 +204,93 @@ img { width:100%; border-radius:10px; }
   justify-items: center;
 }
 .emergency-section {
+  padding-top: 70px;
+  justify-items: center;
+  background-color: rgb(250, 241, 241);
+  padding-bottom: 20px;
   width: 100%;
-  padding: 0 16px;
+  padding-left: 16px;
+  padding-right: 16px;
   box-sizing: border-box;
 }
 
 .emergency-title {
-  font-size: 18px;
+  font-size: 20px;
   color: #ff4255;
-  margin-bottom: 1em;
   font-weight: 500;
-  text-align: left;
 }
 
 .emergency-grid {
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
-  justify-content: left; /* 가운데 정렬 */
-  gap: 12px;
+  justify-content: center; /* 가운데 정렬 */
+  gap: 16px;
 }
+
 
 .emergency-option {
-  margin-top: 40px;
-  width: 30%; /* 고정 크기 */
+  margin-top: 20px;
+  aspect-ratio: 1;
   min-width: 100px;
-  max-width: 120px;
+  max-width: 200px;
   border-radius: 100px;
   text-align: center;
-  padding: 12px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
+  font-size: .75em;
+  font-weight: 500;
   color: #ff4255;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
-/* 여기 추가! 아이콘 크기 통일 */
+
+/* 아이콘 크기 통일 */
 .emergency-option img {
-  width: 80px;
+  width: 80px; /* 고정 크기 */
   height: 80px;
-  object-fit: contain; /* 혹시 아이콘 비율 깨지는 걸 방지 */
-  margin-bottom: 10px; /* 아이콘과 텍스트 사이 약간 간격 */
+  object-fit: contain;
+  margin-bottom: 5px;
 }
 
+/* 선택된 emergency-option 스타일 */
+.emergency-option.selected {
+  background-color: #ff4255;
+  color: white;
+  transition: background-color 0.2s ease, color 0.3s ease;
+}
+
+/* 선택된 emergency-option 안의 이미지 */
+.emergency-option.selected img {
+  filter: brightness(0) saturate(100%) invert(1);
+  transition: filter 0.2s ease;
+}
+
+/* 고정 Emergency 버튼 스타일 */
 .fixed-emergency-btn {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   bottom: 0;
+  gap: 16px; /* 아이콘과 텍스트 사이 간격 */
   left: 0;
-  height: 60px;
+  height: 75px;
   width: 100%;
   padding: 16px 0;
-  background-color: #ff4255; /* 빨간색 계열 */
+  background-color: #ff4255;
   color: white;
   border: none;
-  font-size: 1.1em;
-  font-weight: 550;
+  font-size: 1em;
+  font-weight: 600;
   text-align: center;
   cursor: pointer;
   z-index: 1000;
+}
+
+.icon{
+  height: 30px; /* 텍스트 높이(em)랑 맞추기 */
+  width: auto; /* 비율 유지 */
 }
