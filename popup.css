@@ -10,7 +10,7 @@
   
     width: 95%;
     max-width: 400px;
-    height: 100vh;
+    height: auto;
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
@@ -22,9 +22,11 @@
   }
   
   .popup-content {
-    margin-top: 10vh;
+    margin-top: 60px;
+    height: 600px;
+    flex: 1 1 auto;  /* ✅ 무조건 위 공간 채워줌 */
+    min-height: 0;   /* ✅ 스크롤 작동 제대로 */
     flex-grow: 1;
-    min-height: 0; /* ✅ 추가 */
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -56,6 +58,7 @@
   }
   .popup-icon {
     display: flex;
+    margin-top: 60px;
     justify-content: center;
     align-items: center;
     margin-bottom: 16px;
@@ -63,6 +66,7 @@
   
   .popup-icon1{
     display: flex;
+    margin-top: 60px;
     justify-content: center;
     align-items: center;
     margin-bottom: 16px;
@@ -73,7 +77,7 @@
     margin-bottom: 24px;
   }
   .popup-icon img {
-    width: 220px;
+    width: 200px;
     height: auto;
     margin: .5em auto;
     display: block;
