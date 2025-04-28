@@ -1,0 +1,196 @@
+.popup {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    width: 95%;
+    max-width: 400px;
+    height: 100vh;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  
+    padding: 1.5em;
+    z-index: 1500;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .popup-content {
+    margin-top: 10vh;
+    flex-grow: 1;
+    min-height: 0; /* ✅ 추가 */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    width: 100%;
+  }
+  
+.popup-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    margin-top: autos;
+  }
+
+  #popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(38, 38, 38, 0.6); /* 반투명 흰색 */
+    backdrop-filter: blur(6px); /* 블러 효과 */
+    z-index: 1100; /* 팝업보다 아래 (팝업은 z-index: 1000) */
+  }
+  /* 사라질 때 */
+  .popup.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .popup-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .popup-icon1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .popup-subtext {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 24px;
+  }
+  .popup-icon img {
+    width: 220px;
+    height: auto;
+    margin: .5em auto;
+    display: block;
+  }
+  .popup-icon1 img {
+    width: 120px;
+    height: 120px;
+    margin: .5em auto;
+    display: block;
+  }
+  .popup h2 {
+    font-size: 1.6em;
+    text-shadow: 0px 1px 5px rgba(185, 190, 186, 0.25);
+    margin-bottom: 0.5em;
+  }
+  
+  .popup p {
+    font-size: 1em;
+    color: #797979;
+    margin-top: .5em;
+    margin-bottom: 5em;
+  }
+  
+  .popup-form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    margin-bottom: 1.5em;
+  }
+  
+  .popup-form-group input {
+    padding: 0.75em;
+    font-size: 1em;
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+  }
+
+
+  .popup-buttons button {
+    width: 100%;
+    padding: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .submit-btn {
+    background-color: #ff4255;
+    color: white;
+  }
+  
+  .cancel-btn {
+    background-color: #ececec;
+    color: #333;
+  }
+/*
+.popup { 
+  width:95%!important; 
+  max-width:500px!important; 
+  display:flex; 
+  gap:1em;
+  position:fixed; 
+  top:5%; 
+  left:50%; 
+  transform:translateX(-50%);
+  background:#fff; 
+  padding:.5em; 
+  border-radius:12px; 
+  box-shadow:0 0 20px rgba(0,0,0,0.2);
+  z-index:1000; 
+  overflow-y:auto; 
+  max-height:90vh; 
+}
+
+label, select, input { 
+  width:100%; 
+  margin:0.15em 0; 
+  padding:0.15em; 
+  font-size:1em; 
+  border:1px solid #ccc; 
+  border-radius:6px; 
+}
+
+.submit-btn { background:#e04859; color:#fff; }
+.cancel-btn { background:#d4d4d4; color:#272727; }
+
+.submit-btn, .cancel-btn { 
+  margin-top:0.15em; 
+  padding:1em; 
+  font-size:1.1em; 
+  font-weight:bold; 
+  width:100%; 
+  border:none; 
+  border-radius:10px; 
+  cursor:pointer; 
+}
+
+img { width:100%; border-radius:10px; }
+
+.popup-grid { 
+  display:grid; 
+  grid-template-columns:48% 48%; 
+  row-gap:0.15em; 
+  column-gap:4.5%; 
+}
+
+.popup-grid label { 
+  font-weight:bold; 
+  margin-bottom:0.15em; 
+  display:block; 
+}
+
+.popup-grid select { 
+  min-width:140px; 
+}
+*/

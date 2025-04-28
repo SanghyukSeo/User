@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Complete</title>
+  <link rel="stylesheet" href="popup.css"> <!-- 기존 스타일 그대로 사용 -->
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f9f9f9;
+      margin: 0;
+    }
+    .success-container {
+      background: white;
+      padding: 2em;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    .success-container img {
+      width: 80px;
+      margin-bottom: 1em;
+    }
+    .success-container h1 {
+      font-size: 1.8em;
+      color: #4CAF50;
+      margin-bottom: 0.5em;
+    }
+    .success-container p {
+      font-size: 1em;
+      color: #555;
+      margin-bottom: 1.5em;
+    }
+    .success-container button {
+      padding: 0.75em 1.5em;
+      font-size: 1em;
+      background-color: #ff4255;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="success-container">
+    <img src="check-icon.svg" alt="Success">
+    <h1>Thank You!</h1>
+    <p>Your information has been successfully submitted.<br>
+    You will be redirected to home in 3 seconds.</p>
+    <button onclick="goHome()">Back to Home Now</button>
+  </div>
+
+  <script>
+    function goHome() {
+      window.location.href = 'index.html'; // 홈 주소
+    }
+
+    // ✨ 자동으로 3초 후 홈으로 이동
+    setTimeout(goHome, 3000); // 3000ms = 3초
+  </script>
+</body>
+</html>

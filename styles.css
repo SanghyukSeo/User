@@ -88,76 +88,11 @@ nav button:hover, nav .active { background:#cccccc; }
 }
 
 
-.popup { 
-  width:95%!important; 
-  max-width:500px!important; 
-  display:flex; 
-  gap:1em;
-  position:fixed; 
-  top:5%; 
-  left:50%; 
-  transform:translateX(-50%);
-  background:#fff; 
-  padding:.5em; 
-  border-radius:12px; 
-  box-shadow:0 0 20px rgba(0,0,0,0.2);
-  z-index:1000; 
-  overflow-y:auto; 
-  max-height:90vh; 
-}
-
-label, select, input { 
-  width:100%; 
-  margin:0.15em 0; 
-  padding:0.15em; 
-  font-size:1em; 
-  border:1px solid #ccc; 
-  border-radius:6px; 
-}
-
-.submit-btn { background:#e04859; color:#fff; }
-.cancel-btn { background:#d4d4d4; color:#272727; }
-
-.submit-btn, .cancel-btn { 
-  margin-top:0.15em; 
-  padding:1em; 
-  font-size:1.1em; 
-  font-weight:bold; 
-  width:100%; 
-  border:none; 
-  border-radius:10px; 
-  cursor:pointer; 
-}
-
-img { width:100%; border-radius:10px; }
-
-.popup-grid { 
-  display:grid; 
-  grid-template-columns:48% 48%; 
-  row-gap:0.15em; 
-  column-gap:4.5%; 
-}
-
-.popup-grid label { 
-  font-weight:bold; 
-  margin-bottom:0.15em; 
-  display:block; 
-}
-
-.popup-grid select { 
-  min-width:140px; 
-}
-
-
-
-
 
 
 /* Emergency Page Styles */
 
-
 .main-buttons {
-
  display: flex;
 width: 100%;
 padding-top: 120px;
@@ -170,11 +105,12 @@ align-items: center; /* 세로 중앙 */
 
 }
 
+/* 홈 버튼 */
 .main-buttons button {
   display: flex;
-  width: 75%;
+  width: 70%;
   padding: 0 1.5em; /* 좌우만 패딩, 높이는 고정 */
-  height: 50px;
+  height: 60px;
   border-radius: 100px;
   border: none;
   cursor: pointer;
@@ -293,4 +229,26 @@ align-items: center; /* 세로 중앙 */
 .icon{
   height: 30px; /* 텍스트 높이(em)랑 맞추기 */
   width: auto; /* 비율 유지 */
+}
+
+
+
+/* ✅ Reporter Info 폼 추가 스타일 */
+.reporter-info-form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 0 16px;
+}
+
+.reporter-info-form input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fafafa;
 }

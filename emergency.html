@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Event-aid</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
@@ -43,6 +44,7 @@
 </div>
 
 
+
   <div class="tab-content active-tab" id="home">
     <!-- 제거 또는 일반 버튼만 유지 -
     <button class="alert-btn aid-btn" onclick="startReport('Non-Life Threatening')">
@@ -77,7 +79,79 @@
     </div>
   </div>
 
-  <div class="popup" id="popupForm" style="display:none;">
+
+  <div id="popupOverlay" style="display:none;"></div>
+  <!-- ✅ 제보자 정보 입력 팝업 (수정된 버전) -->
+<div class="popup" id="popupReporterInfo" style="display:block;">
+  
+  <div class="popup-content">
+    <div class="popup-icon">
+      <img src="Assets/ambulance-icon.svg" alt="Help is on the way">
+    </div>
+    <h2>Help is on the way</h2>
+    <p class="popup-subtext">Few more steps left.</p>
+
+    <form id="reporterForm">
+      <div class="popup-form-group">
+        <input type="text" id="rname" name="rname" placeholder="Your Name" required>
+        <input type="tel" id="rphone" name="rphone" placeholder="Your Phone #" required>
+      </div>
+    </form>
+  </div>
+
+  <div class="popup-buttons">
+    <button type="submit" form="reporterForm" class="submit-btn">Next</button>
+    <button type="button" class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
+  </div>
+</div>
+
+<!-- ✅ Request Submitted 화면 -->
+<div class="popup" id="popupRequestSubmitted" style="display:none;">
+  
+  <div class="popup-content">
+    <div class="popup-icon1">
+      <img src="Assets/check-icon.svg" alt="Success">
+    </div>
+    <h2>Request Submitted</h2>
+    <p>Help is on the way.</p>
+  </div>
+
+  <div class="popup-buttons">
+    <button class="submit-btn" onclick="openMoreInfo()">Add More Information</button>
+    <button class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
+  </div>
+</div>
+
+<!-- ✅ 추가 정보 입력 팝업 -->
+<div class="popup" id="popupMoreInfo" style="display:none;">
+  
+  <div class="popup-content" id="moreInfoStep1">
+    <h2>Brief Description (Optional)</h2>
+    <form id="descriptionForm">
+      <div class="popup-form-group">
+        <input type="text" name="oinfo" placeholder="E.g., height, clothing, appearance">
+      </div>
+    </form>
+  </div>
+
+  <div class="popup-content" id="moreInfoStep2" style="display:none;">
+    <h2>Current Medications (Optional)</h2>
+    <form id="medicationForm">
+      <div class="popup-form-group">
+        <input type="text" name="meds" placeholder="Medications currently taken">
+      </div>
+    </form>
+  </div>
+
+  <div class="popup-buttons" id="medicationButtons">
+    <button type="button" class="submit-btn" onclick="goToMedication()">Next</button>
+    <button type="submit" form="medicationForm" class="submit-btn">Submit Info</button>
+    <button type="button" class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
+  </div>
+</div>
+  
+  <!--
+  <div class="popup" id="popupForm" style="display:block;">
     <h2 style="color:red; text-align:center; margin:0.5em 0 0.3em;">HELP IS ON THE WAY</h2>
     <p style="margin:0.2em 0 0.4em;">Please stay nearby and fill out the details about the individual in need.</p>
     <form id="helpForm">
@@ -116,21 +190,19 @@
     </form>
   </div>
 
-
+-->
 
 
 
 
   <script>
-    let currentUID = null, currentToken = null;
-    let selectedType = null; // 선택된 emergency 타입
-  
-    function showTab(id) {
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
-      document.getElementById(id).classList.add('active-tab');
-    }
   
     /*
+
+    EMRGENCY 타입 선택
+
+
+
     function selectEmergency(type, buttonElement) {
       selectedType = type;
   
@@ -192,23 +264,7 @@ console.log(`Selected Emergency Type: ${selectedType}`);
       }, _ => alert('Unable to get location'));
     }
   
-    document.getElementById('helpForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const f = new FormData(this);
-      fetch('update_report.php', { method: 'POST', body: f })
-        .then(r => r.json())
-        .then(d => {
-          if (d.status === 'success') {
-            alert('Report updated.');
-            this.reset();
-            document.getElementById('popupForm').style.display = 'none';
-          } else {
-            alert('Update failed: ' + d.message);
-          }
-        })
-        .catch(e => { console.error(e); alert('Update error'); });
-    });
-  
+
     function cancelRequest() {
       const f = new FormData();
       f.append('uid', currentUID);
@@ -223,6 +279,18 @@ console.log(`Selected Emergency Type: ${selectedType}`);
         .catch(e => { console.error(e); alert('Cancel error'); });
     }
   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -264,9 +332,154 @@ console.log(`Selected Emergency Type: ${selectedType}`);
     window.onload = initMap;
 
 
-    // Google Maps API를 사용하여 지도를 초기화하는 함수
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 팝업 열기 및 닫기
+
+    function openPopup(popupId) {
+  document.getElementById('popupOverlay').style.display = 'block';
+  document.getElementById(popupId).style.display = 'block';
+}
+
+function closePopup(popupId) {
+  document.getElementById('popupOverlay').style.display = 'none';
+  document.getElementById(popupId).style.display = 'none';
+}
+// 추가 정보 제출 이벤트
+let currentUID = null, currentToken = null;
+let selectedType = null; // 선택한 Emergency 타입
+
+// ✅ Emergency 타입 선택
+function selectEmergency(type, buttonElement) {
+  selectedType = type;
+
+  document.querySelectorAll('.emergency-option').forEach(btn => {
+    btn.classList.remove('selected');
+  });
+
+  buttonElement.classList.add('selected');
+
+  console.log(`Selected Emergency Type: ${selectedType}`);
+}
+
+// ✅ Request Help 버튼 클릭 → 제보자 입력 팝업 열기
+function startReport() {
+  if (!selectedType) {
+    alert('Please select an emergency type first.');
+    return;
+  }
+  openPopup('popupReporterInfo');
+}
+
+// ✅ 제보자 입력 폼 제출
+document.getElementById('reporterForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    const initData = new FormData();
+    initData.append('etype', selectedType);
+    initData.append('lat', pos.coords.latitude);
+    initData.append('long', pos.coords.longitude);
+    initData.append('rname', document.getElementById('rname').value);
+    initData.append('rphone', document.getElementById('rphone').value);
+
+    fetch('init_report.php', { method: 'POST', body: initData })
+      .then(r => r.json())
+      .then(d => {
+        if (d.status === 'success') {
+          currentUID = d.uid;
+          currentToken = d.authtok;
+          document.getElementById('popupReporterInfo').style.display = 'none';
+          document.getElementById('popupRequestSubmitted').style.display = 'block';
+        } else {
+          alert('Init failed: ' + d.message);
+        }
+      })
+      .catch(e => { console.error(e); alert('Init error'); });
+  }, _ => alert('Unable to get location'));
+});
+
+// ✅ Add More Info 버튼 누르면 MoreInfo 화면 열기
+function openMoreInfo() {
+  document.getElementById('popupRequestSubmitted').style.display = 'none';
+  document.getElementById('popupMoreInfo').style.display = 'block';
+}
+
+// ✅ Description 작성 후 Medication으로 이동
+function goToMedication() {
+  document.getElementById('moreInfoStep1').style.display = 'none';
+  document.getElementById('moreInfoStep2').style.display = 'block';
+
+  // Fainting이면 Skip 버튼 추가
+  if (selectedType === 'Fainting' && !document.getElementById('skipButton')) {
+    const skipBtn = document.createElement('button');
+    skipBtn.className = 'cancel-btn';
+    skipBtn.textContent = 'Skip';
+    skipBtn.type = 'button';
+    skipBtn.id = 'skipButton';
+    skipBtn.onclick = fadeAndRedirect;
+    document.getElementById('medicationButtons').appendChild(skipBtn);
+  }
+}
+
+// ✅ Medication 입력 후 제출
+document.getElementById('medicationForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const f = new FormData(this);
+  f.append('uid', currentUID);
+  f.append('authtok', currentToken);
+
+  fetch('update_report.php', { method: 'POST', body: f })
+    .then(r => r.json())
+    .then(d => {
+      if (d.status === 'success') {
+        fadeAndRedirect();
+      } else {
+        alert('Update failed: ' + d.message);
+      }
+    })
+    .catch(e => { console.error(e); alert('Update error'); });
+});
+
+// ✅ 요청 취소 (Cancel Request 버튼 누르면 홈으로)
+function cancelRequest() {
+  const f = new FormData();
+  f.append('uid', currentUID);
+  f.append('authtok', currentToken);
+  f.append('status', 'Canceled');
+
+  fetch('cancel_report.php', { method: 'POST', body: f })
+    .then(r => r.json())
+    .then(d => {
+      window.location.href = 'index.html';
+    })
+    .catch(e => { console.error(e); alert('Cancel error'); });
+}
+
+// ✅ 제출 성공 후 부드럽게 홈 이동
+function fadeAndRedirect() {
+  const popups = document.querySelectorAll('.popup');
+  popups.forEach(popup => popup.classList.add('fade-out'));
+
+  setTimeout(() => {
+    window.location.href = 'success.html';
+  }, 600);
+}
 /*
     function initMap() {
       const map = new google.maps.Map(document.getElementById('map-container'), {
