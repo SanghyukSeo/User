@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 body {
-  font-family: 'Inter', sans-serif; margin:0; padding:0; background:#ffffff; }
+  font-family: 'Inter', sans-serif; margin:0; padding:0; background:#fffbfb; }
 
 header {
   display: flex;
@@ -13,6 +13,7 @@ header {
   padding: .5em;
   color: #424242;
   background-color: #ffffff80;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
   backdrop-filter: blur(10px);
   font-size: 1.2em;
   font-weight: 550;
@@ -49,6 +50,7 @@ nav button:hover, nav .active { background:#cccccc; }
   background-color: #ffffff;
   gap:1em; 
   padding:16px;
+  
 }
 .Report-type{
   display:flex; 
@@ -105,7 +107,7 @@ align-items: center; /* 세로 중앙 */
 
 }
 
-/* 홈 버튼 */
+/* 홈 버튼들*/
 .main-buttons button {
   display: flex;
   width: 70%;
@@ -140,47 +142,49 @@ align-items: center; /* 세로 중앙 */
   justify-items: center;
 }
 .emergency-section {
-  padding-top: 70px;
+  padding-top: 80px;
   justify-items: center;
-  background-color: rgb(250, 241, 241);
   padding-bottom: 20px;
   width: 100%;
-  padding-left: 16px;
-  padding-right: 16px;
   box-sizing: border-box;
 }
 
 .emergency-title {
-  font-size: 20px;
+  font-size: 1.2em;
   color: #ff4255;
-  font-weight: 500;
+  font-weight: 600;
+  margin-bottom: 24px; /* 이 값을 늘리면 아래 여백이 생깁니다 */
 }
-
 .emergency-grid {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  justify-content: center; /* 가운데 정렬 */
-  gap: 16px;
+  justify-content: center;
+  gap: 0px  10px; /* 세로 간격 24px, 가로 간격 12px */
 }
 
-
 .emergency-option {
-  margin-top: 20px;
   aspect-ratio: 1;
   min-width: 100px;
   max-width: 200px;
-  border-radius: 100px;
   text-align: center;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  font-size: .75em;
-  font-weight: 500;
+  font-size: 0.8em;
+  font-weight: 600;
   color: #ff4255;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+  
+.emergency-etc-text {
+  margin-top: 40px;
+  text-align: center;
+  color: #666;
+  font-size: 1em;
+  font-style: italic;
 }
 
 /* 아이콘 크기 통일 */
@@ -188,22 +192,35 @@ align-items: center; /* 세로 중앙 */
   width: 80px; /* 고정 크기 */
   height: 80px;
   object-fit: contain;
-  margin-bottom: 5px;
+  padding: 1em;
+  margin-bottom: 0px;
+}
+.icon-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  padding: .6em;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease;
 }
 
-/* 선택된 emergency-option 스타일 */
-.emergency-option.selected {
-  background-color: #ff4255;
-  color: white;
-  transition: background-color 0.2s ease, color 0.3s ease;
-}
-
-/* 선택된 emergency-option 안의 이미지 */
-.emergency-option.selected img {
-  filter: brightness(0) saturate(100%) invert(1);
+.icon-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   transition: filter 0.2s ease;
 }
 
+.emergency-option.selected .icon-wrapper {
+  background-color: #ff4255;
+}
+
+.emergency-option.selected .icon-wrapper img {
+  filter: brightness(0) saturate(100%) invert(1);
+}
 /* 고정 Emergency 버튼 스타일 */
 .fixed-emergency-btn {
   position: fixed;

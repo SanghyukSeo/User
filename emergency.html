@@ -18,28 +18,44 @@
 </header>
 
 <div class="emergency-section">
-  <p class="emergency-title"></p>
+  <p class="emergency-title">Select emergency type</p>
   <div class="emergency-grid">
-    <div class="emergency-option" onclick="selectEmergency('Fainting', this)">
-    <img src="Assets/Group2.svg" alt="Fainting Icon">
-    <span>FAINT</span>
-  </div>
-  <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
-    <img src="Assets/Group.svg" alt="Substance Abuse Icon">
-    <span>SUBSTANCE</span>
-  </div><!--
-  <div class="emergency-option" onclick="selectEmergency('Dehydration', this)">
-    <img src="Assets/Dehydration.svg" alt="Dehydration Icon">
-    <span>DEHYDRATION</span>
-  </div> -->
-  <div class="emergency-option" onclick="selectEmergency('Fighting', this)">
-    <img src="Assets/fighting.svg" alt="Fighting Icon">
-    <span>FIGHT</span>
-  </div>
-  <div class="emergency-option" onclick="selectEmergency('Other', this)">
-    <img src="Assets/Dehydration.svg" alt="Other Icon">
-    <span>OTHER</span>
-  </div>
+
+    <div class="emergency-option" onclick="selectEmergency('Unconscious', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/Group2.svg" alt="Unconscious Icon">
+      </div>
+      <span>FAINTED</span>
+    </div>
+
+    <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/Group.svg" alt="Substance Abuse Icon">
+      </div>
+      <span>DRUGS</span>
+    </div>
+    
+    <div class="emergency-option" onclick="selectEmergency('Fighting', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/fighting.svg" alt="Fighting Icon">
+      </div>
+      <span>FIGHT</span>
+    </div>
+
+    <div class="emergency-option" onclick="selectEmergency('Dehydration', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/Dehydration.svg" alt="Dehydration Icon">
+      </div>
+      <span>DEHYDRATION</span>
+    </div> 
+
+    <div class="emergency-option" onclick="selectEmergency('Other', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/emergency-icon.svg" alt="Other Icon">
+      </div>
+      <span>OTHER</span>
+    </div>
+
   </div>
 </div>
 
@@ -80,11 +96,29 @@
   </div>
 
 
-  <div id="popupOverlay" style="display:block;"></div>
-  <!-- ✅ 제보자 정보 입력 팝업 (수정된 버전) -->
-<div class="popup" id="popupReporterInfo" style="display:block;">
-  
+
+<!-- ✅ Other Contact 팝업 -->
+<div class="popup" id="popupOtherContact" style="display: none;">
+  <button class="popup-close-btn" onclick="closePopup('popupOtherContact')" aria-label="Close">
+    <img src="Assets/x.svg" alt="Close">
+  </button>
   <div class="popup-content">
+    <h2>Need Help? Contact Us</h2>
+    <div class="call-text-btns">
+      <a href="tel:4018659447" class="submit-btn">📞 Voice Call</a>
+      <a href="sms:4018659447" class="cancel-btn">💬 Send Message</a>
+    </div>
+  </div>
+</div>
+
+
+  <div id="popupOverlay" style="display:none;"></div>
+  <!-- ✅ 제보자 정보 입력 팝업 (수정된 버전) -->
+<div class="popup" id="popupReporterInfo" style="display:none;">
+  <button class="popup-close-btn" onclick="cancelRequest()" aria-label="Cancel Request">
+    <img src="Assets/x.svg" alt="Close">
+  </button>
+  </button>  <div class="popup-content">
     <div class="popup-icon">
       <img src="Assets/ambulance-icon.svg" alt="Help is on the way">
     </div>
@@ -100,14 +134,16 @@
   </div>
 
   <div class="popup-buttons">
-    <button type="submit" form="reporterForm" class="submit-btn">Next</button>
+    <button type="submit" form="reporterForm" class="submit-btn">Submit</button>
     <button type="button" class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
   </div>
 </div>
 
 <!-- ✅ Request Submitted 화면 -->
-<div class="popup" id="popupRequestSubmitted" style="display:block;">
-  
+<div class="popup" id="popupRequestSubmitted" style="display:none;">
+  <button class="popup-close-btn" onclick="cancelRequest()" aria-label="Cancel Request">
+    <img src="Assets/x.svg" alt="Close">
+  </button>
   <div class="popup-content">
     <div class="popup-icon1">
       <img src="Assets/check-icon.svg" alt="Success">
@@ -123,7 +159,9 @@
 </div>
 <!-- ✅ 추가 정보 입력 팝업 -->
 <div class="popup" id="popupMoreInfo" style="display:none;">
-  
+  <button class="popup-close-btn" onclick="cancelRequest()" aria-label="Cancel Request">
+    <img src="Assets/x.svg" alt="Close">
+  </button>
   <div class="popup-content" id="moreInfoStep1">
     <h2>Appearance Details</h2>
     <p>* Optional</p>
@@ -133,7 +171,6 @@
       </div>
     </form>
   </div>
-
   <div class="popup-content" id="moreInfoStep2" style="display:none;">
     <h2>Medication Details </h2>
     <p>* Optional</p>
@@ -146,7 +183,7 @@
 
   <div class="popup-buttons" id="medicationButtons">
     <button type="button" class="submit-btn" onclick="goToMedication()">Next</button>
-    <button type="button" class="cancel-btn" onclick="goBackToDescription()">Back</button>
+    <button type="button" class="cancel-btn" onclick="goBackToDescription()">Skip</button>
   </div>
 </div>
 <script>
@@ -237,20 +274,11 @@
   
       console.log(`Selected Emergency Type: ${selectedType}`);
     }
-      */function selectEmergency(type, buttonElement) {
-  selectedType = type;
+      */
+     
 
-// 모든 버튼에서 selected 클래스 제거
-document.querySelectorAll('.emergency-option').forEach(btn => {
-  btn.classList.remove('selected');
-});
 
-// 클릭한 버튼에 selected 클래스 추가
-buttonElement.classList.add('selected');
 
-console.log(`Selected Emergency Type: ${selectedType}`);
-}
-  
     function startReport() {
       if (!selectedType) {
         alert('Please select an emergency type first.');
@@ -382,19 +410,28 @@ function closePopup(popupId) {
 let currentUID = null, currentToken = null;
 let selectedType = null; // 선택한 Emergency 타입
 
-// ✅ Emergency 타입 선택
+
+
+
 function selectEmergency(type, buttonElement) {
   selectedType = type;
 
+  // 모든 버튼 초기화
   document.querySelectorAll('.emergency-option').forEach(btn => {
     btn.classList.remove('selected');
   });
 
+  // 선택한 버튼 활성화
   buttonElement.classList.add('selected');
 
   console.log(`Selected Emergency Type: ${selectedType}`);
-}
 
+
+  // ✅ "Other" 선택 시 팝업 열기
+  if (selectedType === 'Other') {
+    openPopup('popupOtherContact');
+  }
+}
 // ✅ Request Help 버튼 클릭 → 제보자 입력 팝업 열기
 function startReport() {
   if (!selectedType) {

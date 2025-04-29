@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Aid - Other Help</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .help-screen {
+      padding: 100px 16px 80px;
+      text-align: center;
+    }
+
+    .help-screen h2 {
+      color: #ff4255;
+      margin-bottom: 1.5em;
+      font-size: 1.5em;
+    }
+
+    .call-text-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      align-items: center;
+    }
+
+    .call-text-btns a {
+      display: block;
+      width: 80%;
+      max-width: 300px;
+      padding: 1em;
+      border-radius: 100px;
+      background-color: #ff4255;
+      color: white;
+      font-size: 1.1em;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .call-text-btns a:hover {
+      background-color: #e23645;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <button class="back-button" onclick="history.back()">
+      <img src="back.svg" alt="Back">
+    </button>
+    <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
+  </header>
+
+  <div class="help-screen">
+    <h2>Need Help? Contact Support</h2>
+    <div class="call-text-btns">
+      <a href="tel:4018659447">📞 Call 401-865-9447</a>
+      <a href="sms:4018659447">💬 Text 401-865-9447</a>
+    </div>
+  </div>
+
+</body>
+</html>

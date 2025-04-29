@@ -8,8 +8,8 @@
     flex-direction: column;
     justify-content: space-between;
   
-    width: 95%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 320px;
     height: auto;
     background: #ffffff;
     border-radius: 16px;
@@ -22,6 +22,38 @@
     opacity: 1;
     transition: opacity 0.3s ease;
   }
+
+/*팝업 보이스콜 메시지*/
+  .call-text-btns {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50%;
+    gap: 1em;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .call-text-btns a {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    padding: 1em;
+    border-radius: 100px;
+    background-color: #ff4255;
+    color: white;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .call-text-btns a.cancel-btn {
+    background-color: #fbfbfb;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    color: #131313;
+  }
+
+  
   .call-btn {
     background: none;
     border: none;
@@ -31,10 +63,18 @@
     padding: 0;
     margin: 1em 0;
   }
-  
+  .popup-close-btn {
+    position: absolute;
+    top: 24px;
+    left: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+  }
   .popup-content {
     margin-top: 60px;
-    height: 70vh;
+    height: 65vh;
     flex: 1 1 auto;  /* ✅ 무조건 위 공간 채워줌 */
     min-height: 0;   /* ✅ 스크롤 작동 제대로 */
     flex-grow: 1;
@@ -75,23 +115,24 @@
   }
   .popup-icon {
     display: flex;
-    margin-top: 60px;
+    margin-top: 10px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
   
   .popup-icon1{
     display: flex;
-    margin-top: 60px;
+    margin-top: 10px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
   .popup-subtext {
     font-size: 1em;
     color: #555;
     margin-bottom: 24px;
+    margin-top: 0;
   }
   .popup-icon img {
     width: 200px;
@@ -108,7 +149,7 @@
   .popup h2 {
     font-size: 1.6em;
     text-shadow: 0px 1px 5px rgba(185, 190, 186, 0.25);
-    margin-bottom: 0.5em;
+    margin-bottom: 0.1em
   }
   
   .popup p {
