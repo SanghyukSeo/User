@@ -80,9 +80,9 @@
   </div>
 
 
-  <div id="popupOverlay" style="display:none;"></div>
+  <div id="popupOverlay" style="display:block;"></div>
   <!-- ✅ 제보자 정보 입력 팝업 (수정된 버전) -->
-<div class="popup" id="popupReporterInfo" style="display:none;">
+<div class="popup" id="popupReporterInfo" style="display:block;">
   
   <div class="popup-content">
     <div class="popup-icon">
@@ -106,7 +106,7 @@
 </div>
 
 <!-- ✅ Request Submitted 화면 -->
-<div class="popup" id="popupRequestSubmitted" style="display:none;">
+<div class="popup" id="popupRequestSubmitted" style="display:block;">
   
   <div class="popup-content">
     <div class="popup-icon1">
@@ -118,38 +118,57 @@
 
   <div class="popup-buttons">
     <button class="submit-btn" onclick="openMoreInfo()">Add More Information</button>
-    <button class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
+    <button class="cancel-btn" onclick="cancelRequest()">Return Home</button>
   </div>
 </div>
-
 <!-- ✅ 추가 정보 입력 팝업 -->
 <div class="popup" id="popupMoreInfo" style="display:none;">
   
   <div class="popup-content" id="moreInfoStep1">
-    <h2>Brief Description (Optional)</h2>
+    <h2>Appearance Details</h2>
+    <p>* Optional</p>
     <form id="descriptionForm">
       <div class="popup-form-group">
-        <input type="text" name="oinfo" placeholder="E.g., height, clothing, appearance">
+        <input type="text" name="oinfo" placeholder="What does the person look like?">
       </div>
     </form>
   </div>
 
   <div class="popup-content" id="moreInfoStep2" style="display:none;">
-    <h2>Current Medications (Optional)</h2>
+    <h2>Medication Details </h2>
+    <p>* Optional</p>
     <form id="medicationForm">
       <div class="popup-form-group">
-        <input type="text" name="meds" placeholder="Medications currently taken">
+        <input type="text" name="meds" placeholder="Medications currently taken?">
       </div>
     </form>
   </div>
 
   <div class="popup-buttons" id="medicationButtons">
     <button type="button" class="submit-btn" onclick="goToMedication()">Next</button>
-    <button type="submit" form="medicationForm" class="submit-btn">Submit Info</button>
-    <button type="button" class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
+    <button type="button" class="cancel-btn" onclick="goBackToDescription()">Back</button>
   </div>
 </div>
+<script>
+  function goToMedication() {
+    document.getElementById('moreInfoStep1').style.display = 'none';
+    document.getElementById('moreInfoStep2').style.display = 'block';
+  }
   
+  function goBackToDescription() {
+    const step2Visible = document.getElementById('moreInfoStep2').style.display === 'block';
+    
+    if (step2Visible) {
+      // Step2에서 Back 누르면 Step1으로 돌아가기
+      document.getElementById('moreInfoStep2').style.display = 'none';
+      document.getElementById('moreInfoStep1').style.display = 'block';
+    } else {
+      // Step1에서 Back 누르면 이전 화면 (popupRequestSubmitted)로 돌아가기
+      document.getElementById('popupMoreInfo').style.display = 'none';
+      document.getElementById('popupRequestSubmitted').style.display = 'block';
+    }
+  }
+  </script>
   <!--
   <div class="popup" id="popupForm" style="display:block;">
     <h2 style="color:red; text-align:center; margin:0.5em 0 0.3em;">HELP IS ON THE WAY</h2>
