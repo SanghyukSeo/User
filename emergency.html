@@ -113,6 +113,7 @@
 
 
   <div id="popupOverlay" style="display:none;"></div>
+  
   <!-- ✅ 제보자 정보 입력 팝업 (수정된 버전) -->
 <div class="popup" id="popupReporterInfo" style="display:none;">
   <button class="popup-close-btn" onclick="cancelRequest()" aria-label="Cancel Request">
@@ -326,7 +327,7 @@
         .catch(e => { console.error(e); alert('Cancel error'); });
     }
 
-
+/*MAP*/
 
     function initMap() {
       const map = new google.maps.Map(document.getElementById('map-container'), {
