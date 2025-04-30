@@ -66,7 +66,7 @@
   .popup-close-btn {
     position: absolute;
     top: 24px;
-    left: 22px;
+    left: 18px;
     background: none;
     border: none;
     cursor: pointer;
@@ -74,7 +74,7 @@
   }
   .popup-content {
     margin-top: 60px;
-    height: 65vh;
+    height: 50vh;
     flex: 1 1 auto;  /* ✅ 무조건 위 공간 채워줌 */
     min-height: 0;   /* ✅ 스크롤 작동 제대로 */
     flex-grow: 1;
@@ -135,15 +135,13 @@
     margin-top: 0;
   }
   .popup-icon img {
-    width: 200px;
+    width: 170px;
     height: auto;
-    margin: .5em auto;
     display: block;
   }
   .popup-icon1 img {
-    width: 200px;
+    width: 170px;
     height: auto;
-    margin: .5em auto;
     display: block;
   }
   .popup h2 {
