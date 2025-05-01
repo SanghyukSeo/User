@@ -21,27 +21,26 @@
   <p class="emergency-title">Select emergency type</p>
   <div class="emergency-grid">
 
-    
+    <div class="emergency-option" onclick="selectEmergency('Unconscious', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/Group2.svg" alt="Unconscious Icon">
+      </div>
+      <span>FAINTED</span>
+    </div>
+
     <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
       <div class="icon-wrapper">
         <img src="Assets/Group.svg" alt="Substance Abuse Icon">
       </div>
-      <span>DRUGS</span>
+      <span>OVERDOSE</span>
     </div>
     
     <div class="emergency-option" onclick="selectEmergency('Fighting', this)">
       <div class="icon-wrapper">
         <img src="Assets/fighting.svg" alt="Fighting Icon">
       </div>
-      <span>FIGHT</span>
+      <span>SEIZURE</span>
     </div>
-
-    <div class="emergency-option" onclick="selectEmergency('Dehydration', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/Dehydration.svg" alt="Dehydration Icon">
-      </div>
-      <span>DEHYDRATION</span>
-    </div> 
 
     <div class="emergency-option" onclick="selectEmergency('Other', this)">
       <div class="icon-wrapper">
@@ -220,7 +219,6 @@
   </script>
 
   <script>
-  
   let selectedState = null;
 let currentUID = null, currentToken = null;
 let selectedType = null;
@@ -231,7 +229,6 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   selectedState = urlParams.get('state') || 'unknown';
 }; // ✅ 이 괄호가 빠져 있었음
-
 
   function selectEmergency(type, buttonElement) {
     selectedType = type;
