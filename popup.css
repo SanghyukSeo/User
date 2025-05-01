@@ -73,7 +73,7 @@
     color: #333;
   }
   .popup-content {
-    margin-top: 60px;
+    margin-top: 30px;
     height: 50vh;
     flex: 1 1 auto;  /* ✅ 무조건 위 공간 채워줌 */
     min-height: 0;   /* ✅ 스크롤 작동 제대로 */
@@ -118,7 +118,7 @@
     margin-top: 10px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
   
   .popup-icon1{
@@ -126,7 +126,7 @@
     margin-top: 10px;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
   .popup-subtext {
     font-size: 1em;
@@ -135,12 +135,12 @@
     margin-top: 0;
   }
   .popup-icon img {
-    width: 170px;
+    width: 150px;
     height: auto;
     display: block;
   }
   .popup-icon1 img {
-    width: 170px;
+    width: 150px;
     height: auto;
     display: block;
   }

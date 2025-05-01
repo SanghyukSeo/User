@@ -49,7 +49,6 @@ $stmt->execute([
   ':etype' => $etype,
   ':lat'   => $lat,
   ':long'  => $long,
-  ':state'=> $state, // <- 새로 추가된 부분
 ]);
 
 // fetch the new uid
