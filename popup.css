@@ -15,7 +15,7 @@
     border-radius: 16px;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
   
-    padding: 1.5em;
+    padding: 0.5em;
     z-index: 1500;
     overflow: hidden;
     text-align: center;
@@ -30,7 +30,6 @@
     margin-top: 50%;
     gap: 1em;
     align-items: center;
-    width: 100%;
   }
   
   .call-text-btns a {
@@ -74,28 +73,32 @@
   }
   .popup-content {
     margin-top: 30px;
-    height: 50vh;
+    background: none;
+    height: 40vh;
     flex: 1 1 auto;  /* ✅ 무조건 위 공간 채워줌 */
     min-height: 0;   /* ✅ 스크롤 작동 제대로 */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    width: 100%;
+    width: auto;
+    padding: 10px;
   }
   .popup-content p{
     font-size: 1em;
     align-items: center;  
     color: #797979;
-    margin-top: .5em;
-    margin-bottom: 5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
 .popup-buttons {
     display: flex;
     flex-direction: column;
     gap: 1em;
     width: 100%;
-    margin-top: autos;
+    margin-top: auto;
+    width: auto;
+    padding: 10px;
   }
 
   #popupOverlay {
@@ -147,7 +150,7 @@
   .popup h2 {
     font-size: 1.6em;
     text-shadow: 0px 1px 5px rgba(185, 190, 186, 0.25);
-    margin-bottom: 0.1em
+    margin-bottom: 0;
   }
   
   .popup p {
