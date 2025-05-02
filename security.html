@@ -309,7 +309,7 @@ function selectEmergency(type, buttonElement) {
     f.append('status', 'Canceled');
     fetch('cancel_report.php', { method: 'POST', body: f })
       .then(r => r.json())
-      .then(() => window.location.href = 'index.html')
+      .then(() => window.location.href = 'security.html')
       .catch(e => alert('Cancel error'));
   }
 
