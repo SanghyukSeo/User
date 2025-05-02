@@ -7,25 +7,27 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <header>
-        <button class="back-button" onclick="history.back()">
-        <img src="Assets/back.svg" alt="Back">
-      </button>
+  <header>
+    <button class="back-button" onclick="history.back()">
+      <img src="Assets/back.svg" alt="Back">
+    </button>
+  
+    <a href="index.html">
       <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
-    </header>
-    
-  <div class="main-buttons">
-    <button onclick="goToEmergency('conscious')">Conscious</button>
-    <button onclick="goToEmergency('unconscious')">Unconscious</button>
-  </div>
+    </a>
+  </header>
 
+
+    <div class="main-buttons">
+      <button class="urgent-btn" onclick="goToEmergency('Life-Threatening')">Urgent</button>
+      <button class="general-btn" onclick="goToEmergency('Non Life-Threatening')">General</button>
+    </div>
   <script>
     function goToEmergency(state) {
-      if (state === 'conscious') {
-        window.location.href = 'emergency.html?state=conscious';
+      if (state === 'Life-Threatening') {
+        window.location.href = 'emergency2.html?state=Life-Threatening';
       } else {
-        window.location.href = 'emergency2.html?state=unconscious';
+        window.location.href = 'emergency.html?state=Non Life-Threatening';
       }
     }
   </script>

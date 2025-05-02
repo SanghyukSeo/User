@@ -9,25 +9,21 @@
 </head>
 
 <body>
-  
   <header>
     <button class="back-button" onclick="history.back()">
-    <img src="Assets/back.svg" alt="Back">
-  </button>
-  <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
-</header>
+      <img src="Assets/back.svg" alt="Back">
+    </button>
+  
+    <a href="index.html">
+      <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
+    </a>
+  </header>
 
 <div class="emergency-section">
   <p class="emergency-title">Select emergency type</p>
   <div class="emergency-grid">
 
     
-    <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/Group.svg" alt="Substance Abuse Icon">
-      </div>
-      <span>DRUGS</span>
-    </div>
     
     <div class="emergency-option" onclick="selectEmergency('Fighting', this)">
       <div class="icon-wrapper">
@@ -42,6 +38,13 @@
       </div>
       <span>DEHYDRATION</span>
     </div> 
+
+    <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/Group.svg" alt="Substance Abuse Icon">
+      </div>
+      <span>SUBSTANCE</span>
+    </div>
 
     <div class="emergency-option" onclick="selectEmergency('Other', this)">
       <div class="icon-wrapper">
@@ -193,8 +196,6 @@
       }
     }
 
-    window.onload = initMap;
-
 
   </script>
 <script>
@@ -230,6 +231,9 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   selectedState = urlParams.get('state') || 'unknown';
 }; // ✅ 이 괄호가 빠져 있었음
+
+
+
 function selectEmergency(type, buttonElement) {
   selectedType = type;
 
@@ -253,6 +257,8 @@ function selectEmergency(type, buttonElement) {
     }
   }, 200);
 }
+
+
   function startReport() {
     if (!selectedType) return alert('Please select an emergency type first.');
     openPopup('popupReporterInfo');

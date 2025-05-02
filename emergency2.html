@@ -9,13 +9,16 @@
 </head>
 
 <body>
-  
+
   <header>
     <button class="back-button" onclick="history.back()">
-    <img src="Assets/back.svg" alt="Back">
-  </button>
-  <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
-</header>
+      <img src="Assets/back.svg" alt="Back">
+    </button>
+  
+    <a href="index.html">
+      <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
+    </a>
+  </header>
 
 <div class="emergency-section">
   <p class="emergency-title">Select emergency type</p>
@@ -28,6 +31,13 @@
       <span>FAINTED</span>
     </div>
 
+    <div class="emergency-option" onclick="selectEmergency('Seizure', this)">
+      <div class="icon-wrapper">
+        <img src="Assets/Seizure.svg" alt="Seizure Icon">
+      </div>
+      <span>SEIZURE</span>
+    </div>
+
     <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
       <div class="icon-wrapper">
         <img src="Assets/Group.svg" alt="Substance Abuse Icon">
@@ -35,12 +45,6 @@
       <span>OVERDOSE</span>
     </div>
     
-    <div class="emergency-option" onclick="selectEmergency('Seizure', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/Seizure.svg" alt="Seizure Icon">
-      </div>
-      <span>SEIZURE</span>
-    </div>
 
     <div class="emergency-option" onclick="selectEmergency('Other', this)">
       <div class="icon-wrapper">
@@ -84,6 +88,7 @@
       <a href="tel:4018659447" class="submit-btn">📞 Voice Call</a>
       <a href="sms:4018659447?body=1)%20Current%20situation%0A%0A2)%20Your%20name%3F%0A%0A3)%20Phone%20number%3F%0A%0A4)%20Location%20(Which%20floor%3F)%0A%0A*%20A%20responder%20will%20be%20dispatched%20immediately%20after%20submission." class="cancel-btn">💬 Send Message</a> 
      </div>
+</div>
 </div>
 
 
@@ -194,9 +199,6 @@
       }
     }
 
-    window.onload = initMap;
-
-
   </script>
 <script>
   function goToMedication() {
@@ -225,9 +227,13 @@ let currentUID = null, currentToken = null;
 let selectedType = null;
 
 window.onload = () => {
+  initMap();  // 직접 호출
   const urlParams = new URLSearchParams(window.location.search);
   selectedState = urlParams.get('state') || 'unknown';
 }; // ✅ 이 괄호가 빠져 있었음
+
+
+
 function selectEmergency(type, buttonElement) {
   selectedType = type;
 
@@ -249,8 +255,15 @@ function selectEmergency(type, buttonElement) {
     } else {
       openPopup('popupReporterInfo');
     }
-  }, 300);
+  }, 200);
 }
+
+function startReport() {
+    if (!selectedType) return alert('Please select an emergency type first.');
+    openPopup('popupReporterInfo');
+  }
+
+
   document.getElementById('reporterForm').addEventListener('submit', function(e) {
     e.preventDefault();
     navigator.geolocation.getCurrentPosition(pos => {
@@ -304,9 +317,9 @@ function selectEmergency(type, buttonElement) {
   }
 
   function openPopup(popupId) {
-    document.getElementById('popupOverlay').style.display = 'block';
-    document.getElementById(popupId).style.display = 'block';
-  }
+  document.getElementById('popupOverlay').style.display = 'block';
+  document.getElementById(popupId).style.display = 'block';
+}
 
   function closePopup(popupId) {
     document.getElementById('popupOverlay').style.display = 'none';

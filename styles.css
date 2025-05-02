@@ -90,14 +90,17 @@ nav button:hover, nav .active { background:#cccccc; }
 }
 
 
-
+.urgent-btn{
+  background-color: #ff4255 !important;
+  color: white !important;
+}
 
 /* Emergency Page Styles */
 
 .main-buttons {
  display: flex;
 width: 100%;
-padding-top: 40vh;
+padding-top: 45vh;
 height: 100%;
 flex-direction: column;
 align-items: flex-start;
@@ -225,23 +228,31 @@ align-items: center; /* 세로 중앙 */
 /* 고정 Emergency 버튼 스타일 */
 .fixed-emergency-btn {
   position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: #ff4255; /* 생생한 긴급 색상 */
+  color: white;
+  font-weight: bold;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9em 1.6em;
+  width: auto;
+  max-width: 90%;
+  box-shadow: 0 6px 16px rgba(255, 59, 48, 0.4);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 0;
-  gap: 16px; /* 아이콘과 텍스트 사이 간격 */
-  left: 0;
-  height: 70px;
-  width: 100%;
-  padding: 16px 0;
-  background-color: #ff4255;
-  color: white;
-  border: none;
-  font-size: 1em;
-  font-weight: 600;
-  text-align: center;
+  gap: 0.5em;
   cursor: pointer;
   z-index: 1000;
+}
+
+.fixed-emergency-btn .icon {
+  height: 20px;
 }
 
 .icon{
