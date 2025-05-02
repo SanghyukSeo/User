@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select State</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <button class="back-button" onclick="history.back()">
+      <img src="Assets/back.svg" alt="Back">
+    </button>
+  
+    <a href="index.html">
+      <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
+    </a>
+  </header>
+
+
+    <div class="main-buttons">
+      <button class="urgent-btn" onclick="goToEmergency('Life-Threatening')">Urgent</button>
+      <button class="general-btn" onclick="goToEmergency('Non Life-Threatening')">General</button>
+    </div>
+  <script>
+    function goToEmergency(state) {
+      if (state === 'Life-Threatening') {
+        window.location.href = 'emergency2.html?state=Life-Threatening';
+      } else {
+        window.location.href = 'emergency.html?state=Non Life-Threatening';
+      }
+    }
+  </script>
+
+</body>
+</html>

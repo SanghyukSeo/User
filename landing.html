@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Select State</title>
+  <title>Select Category</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,20 +17,26 @@
     </a>
   </header>
 
-
-    <div class="main-buttons">
-      <button class="urgent-btn" onclick="goToEmergency('Life-Threatening')">Urgent</button>
-      <button class="general-btn" onclick="goToEmergency('Non Life-Threatening')">General</button>
-    </div>
-  <script>
-    function goToEmergency(state) {
-      if (state === 'Life-Threatening') {
-        window.location.href = 'emergency2.html?state=Life-Threatening';
-      } else {
-        window.location.href = 'emergency.html?state=Non Life-Threatening';
+  <div class="main-buttons">
+    <button class="urgent-btn" onclick="goToEmergency('Medical')">
+      <img src="Assets/medical.svg" alt="Medical Icon" class="icon-left">
+     Medical
+    </button>
+  
+    <button class="general-btn" id="safetyBtn" onclick="goToEmergency('Safety')">
+      <img src="Assets/shield.svg" alt="Safety Icon" class="icon-left">
+      Safety
+    </button>
+  </div>
+    <script>
+      function goToEmergency(state) {
+        if (state === 'Medical') {
+          window.location.href = 'landing_next.html';
+        } else if (state === 'Safety') {
+          window.location.href = 'security.html?state=Safety';
+        }
       }
-    }
-  </script>
+    </script>
 
 </body>
 </html>

@@ -18,43 +18,40 @@
       <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
     </a>
   </header>
-
-<div class="emergency-section">
-  <p class="emergency-title">Select emergency type</p>
-  <div class="emergency-grid">
-
-    
-    
-    <div class="emergency-option" onclick="selectEmergency('Fighting', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/fighting.svg" alt="Fighting Icon">
+  <div class="emergency-section">
+    <p class="emergency-title">Select security issue</p>
+    <div class="emergency-grid">
+  
+      <div class="emergency-option" onclick="selectEmergency('Fighting', this)">
+        <div class="icon-wrapper">
+          <img src="Assets/fighting.svg" alt="Fighting Icon">
+        </div>
+        <span>FIGHTING</span>
       </div>
-      <span>FIGHTING</span>
+  
+      <div class="emergency-option" onclick="selectEmergency('Harassment', this)">
+        <div class="icon-wrapper">
+          <img src="Assets/harassment.svg" alt="Harassment Icon">
+        </div>
+        <span>HARASSMENT</span>
+      </div> 
+  
+      <div class="emergency-option" onclick="selectEmergency('Mission Person', this)">
+        <div class="icon-wrapper">
+          <img src="Assets/missing_person.svg" alt="mission Person Icon">
+        </div>
+        <span>MISSING PERSON</span>
+      </div>
+  
+      <div class="emergency-option" onclick="selectEmergency('Other', this)">
+        <div class="icon-wrapper">
+          <img src="Assets/emergency-icon.svg" alt="Other Icon">
+        </div>
+        <span>OTHER</span>
+      </div>
+  
     </div>
-
-    <div class="emergency-option" onclick="selectEmergency('Dehydration', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/Dehydration.svg" alt="Dehydration Icon">
-      </div>
-      <span>DEHYDRATION</span>
-    </div> 
-
-    <div class="emergency-option" onclick="selectEmergency('Substance Abuse', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/Group.svg" alt="Substance Abuse Icon">
-      </div>
-      <span>SUBSTANCE</span>
-    </div>
-
-    <div class="emergency-option" onclick="selectEmergency('Other', this)">
-      <div class="icon-wrapper">
-        <img src="Assets/emergency-icon.svg" alt="Other Icon">
-      </div>
-      <span>OTHER</span>
-    </div>
-
   </div>
-</div>
 
 
 
@@ -92,7 +89,6 @@
 </div>
 
   <div id="popupOverlay" style="display:none;"></div>
-
   <!-- ✅ 제보자 정보 입력 팝업 -->
 <div class="popup" id="popupReporterInfo" style="display:none;">
   <button class="popup-close-btn" onclick="cancelRequest()" aria-label="Cancel Request">
@@ -146,13 +142,13 @@
     <input type="hidden" name="uid">
     <input type="hidden" name="authtok">
     <div class="popup-content">
-      <h2>Health Details</h2>
-      <p>* Optional for better assistance</p>
-      <div class="popup-form-group">
-        <input type="text" name="symptoms" placeholder="Describe the symptoms (e.g. dizziness, nausea)">
-        <input type="text" name="duration" placeholder="How long have they felt this way?">
-        <input type="text" name="meds" placeholder="Any regular medications?">
-      </div>
+        <h2>Additional Information</h2>
+        <p>* Optional but helps security staff</p>
+        <div class="popup-form-group">
+          <input type="text" name="oinfo" placeholder="Appearance of the person(s) involved">
+          <input type="text" name="threat" placeholder="Are they armed or threatening?">
+          <input type="text" name="group" placeholder="Number of people involved">
+        </div>
     </div>
     <div class="popup-buttons">
       <button type="submit" class="submit-btn">Submit Info</button>
@@ -336,4 +332,4 @@ function selectEmergency(type, buttonElement) {
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZPcXdktuxgglm7tC4IkiHK2LMxpPfv4&callback=initMap"></script>
 
 </body>
-</html>
+</html

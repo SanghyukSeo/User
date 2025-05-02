@@ -36,7 +36,8 @@ nav button:hover, nav .active { background:#cccccc; }
 
 .back-button {
   position: absolute;
-  left: 16px;
+  margin-left: 0;
+  left: 10px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -95,12 +96,18 @@ nav button:hover, nav .active { background:#cccccc; }
   color: white !important;
 }
 
+#safetyBtn{
+  background-color: #3495f7;  /* 딥 블루 */
+  color: white
+}
+
 /* Emergency Page Styles */
+
 
 .main-buttons {
  display: flex;
 width: 100%;
-padding-top: 45vh;
+padding-top: 320px;
 height: 100%;
 flex-direction: column;
 align-items: flex-start;
@@ -210,7 +217,11 @@ align-items: center; /* 세로 중앙 */
   align-items: center;
   transition: background-color 0.2s ease;
 }
-
+.icon-left {
+  height: 20px;
+  margin-right: 8px;  /* 글자와 아이콘 사이 공간 */
+  vertical-align: middle;
+}
 .icon-wrapper img {
   width: 100%;
   height: 100%;
