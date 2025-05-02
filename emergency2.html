@@ -63,14 +63,14 @@
   </div>
 
   
-  <!-- Emergency 버튼은 화면 맨 아래에 고정 -->
+  <!-- Emergency 버튼은 화면 맨 아래에 고정 
   <button class="fixed-emergency-btn" onclick="startReport()">
 
     <img src="Assets/Voice_left.svg" alt="" class="icon">
     REQUEST HELP
     <img src="Assets/Voice.svg" alt="" class="icon">
   </button>
-
+-->
 
 
 <!-- ✅ Other Contact 팝업 -->
@@ -109,7 +109,7 @@
     </form>
   </div>
   <div class="popup-buttons">
-    <button type="submit" form="reporterForm" class="submit-btn">Submit</button>
+    <button type="submit" form="reporterForm" class="submit-btn">Add more info</button>
     <button type="button" class="cancel-btn" onclick="cancelRequest()">Cancel Request</button>
   </div>
 </div>
@@ -228,19 +228,29 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   selectedState = urlParams.get('state') || 'unknown';
 }; // ✅ 이 괄호가 빠져 있었음
+function selectEmergency(type, buttonElement) {
+  selectedType = type;
 
-  function selectEmergency(type, buttonElement) {
-    selectedType = type;
-    document.querySelectorAll('.emergency-option').forEach(btn => btn.classList.remove('selected'));
-    buttonElement.classList.add('selected');
-    if (selectedType === 'Other') openPopup('popupOtherContact');
+  // 기존 선택 초기화
+  document.querySelectorAll('.emergency-option').forEach(btn => btn.classList.remove('selected'));
+
+  // 현재 선택 표시 (빨간 테두리 등)
+  buttonElement.classList.add('selected');
+
+  // 📱 진동 (100ms) — 모바일에서만 작동
+  if (navigator.vibrate) {
+    navigator.vibrate(100);
   }
 
-  function startReport() {
-    if (!selectedType) return alert('Please select an emergency type first.');
-    openPopup('popupReporterInfo');
-  }
-
+  // 0.3초 후 팝업 표시
+  setTimeout(() => {
+    if (selectedType === 'Other') {
+      openPopup('popupOtherContact');
+    } else {
+      openPopup('popupReporterInfo');
+    }
+  }, 300);
+}
   document.getElementById('reporterForm').addEventListener('submit', function(e) {
     e.preventDefault();
     navigator.geolocation.getCurrentPosition(pos => {

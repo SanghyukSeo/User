@@ -74,7 +74,7 @@
   .popup-content {
     margin-top: 30px;
     background: none;
-    height: 40vh;
+    height: 60vh;
     flex: 1 1 auto;  /* ✅ 무조건 위 공간 채워줌 */
     min-height: 0;   /* ✅ 스크롤 작동 제대로 */
     flex-grow: 1;
