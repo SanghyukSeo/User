@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+  /* 기본: 데스크탑 */
+  body {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    font-family: sans-serif;
+  }
+  
+  /* 왼쪽 맵 영역 */
+  .map-section {
+    flex-grow: 1;
+    position: relative;
+    height: 100vh;
+  }
+  .report-type {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  #map {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* 오른쪽 사이드바 */
+  .sidebar {
+    width: 360px;
+    background-color: #1a1a1a;
+    color: white;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .sidebar h2 {
+    margin-bottom: 16px; /* 또는 원한는 수치 */
+  }
+  /* 요청 카드 */
+  .request-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .request-card {
+    background-color: #424242;
+    padding: 10px;
+    margin-bottom: 2px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-left: 6px solid transparent; /* ✅ 이 줄 추가 */
+  }
+  
+  .request-card.yellow { border-color: rgb(255, 224, 19); }
+  .request-card.blue { border-color: #1379ed; }
+  .request-card.red { border-color: #ff5151; /* 또는 원한는 색으로: rgb(255, 80, 80) 같은 따뜻한 레드 */
+  }
+  .request-card h3 { margin-bottom: 1px; }
+  
+  .request-card .tags span {
+    display: inline-block;
+    background: #333;
+    padding: 4px 8px;
+   /*border-radius: 4px;*/
+    font-size: 12px;
+    margin: 2px;
+  }
+  
+  .request-card .status {
+    text-align: right;
+    color: #c4c4c4;
+    font-size: 14px;
+    line-height: 1;
+  }
+  
+  /* 하단 버튼 영역 */
+  .sidebar-footer {
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .sidebar-footer button {
+    padding: 8px 16px;
+    background: white;
+    border: none;
+    /*border-radius: 4px;*/
+    cursor: pointer;
+  }
+  
+  .filter-bar {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: white;
+  }
+  .filter-bar select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+  }
+
+  .report-time {
+    font-size: 14px;
+    color: #c4c4c4;
+    margin-left: 4px; /* 왼쪽 여백 약간 */
+
+    line-height: 1;
+  }
+
+  .report-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 중앙 정렬 */
+    margin-top: 6px;
+  }
+  
+  
+
+
+
+
+  /* 📱 모바일 대응 */
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column;
+    }
+  
+    .map-section {
+      height: 50vh;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: 50vh;
+      border-left: none;
+      border-top: 2px solid #333;
+    }
+  }

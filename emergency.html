@@ -6,6 +6,7 @@
   <title>Event-aid</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="popup.css">
+  <script src="eventaid.js" defer></script>
 </head>
 
 <body>
@@ -149,9 +150,9 @@
       <h2>Health Details</h2>
       <p>* Optional for better assistance</p>
       <div class="popup-form-group">
-        <input type="text" name="symptoms" placeholder="Describe the symptoms (e.g. dizziness, nausea)">
-        <input type="text" name="duration" placeholder="How long have they felt this way?">
-        <input type="text" name="meds" placeholder="Any regular medications?">
+        <input type="text" name="info" placeholder="Describe the symptoms (e.g. dizziness, nausea)">
+        <input type="text" name="details1" placeholder="How long have they felt this way?">
+        <input type="text" name="details2" placeholder="Any regular medications?">
       </div>
     </div>
     <div class="popup-buttons">
@@ -264,35 +265,50 @@ function selectEmergency(type, buttonElement) {
     if (!selectedType) return alert('Please select an emergency type first.');
     openPopup('popupReporterInfo');
   }
-
   document.getElementById('reporterForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    navigator.geolocation.getCurrentPosition(pos => {
-      const initData = new FormData();
-      initData.append('state', selectedState);
-      initData.append('etype', selectedType);
-      initData.append('lat', pos.coords.latitude);
-      initData.append('long', pos.coords.longitude);
-      initData.append('rname', document.getElementById('rname').value);
-      initData.append('rphone', document.getElementById('rphone').value);
+  e.preventDefault();
 
-      fetch('init_report.php', { method: 'POST', body: initData })
-        .then(r => r.json())
-        .then(d => {
-          if (d.status === 'success') {
-            currentUID = d.uid;
-            currentToken = d.authtok;
-            document.querySelector("#moreInfoForm [name='uid']").value = currentUID;
-            document.querySelector("#moreInfoForm [name='authtok']").value = currentToken;
-            closePopup('popupReporterInfo');
-            openPopup('popupMoreInfo');
-          } else {
-            alert('Init failed: ' + d.message);
-          }
-        })
-        .catch(e => alert('Init error'));
-    }, () => alert('Unable to get location'));
-  });
+  function proceedWithLocation(lat, lng) {
+    const initData = new FormData();
+    initData.append('state', selectedState);
+    initData.append('etype', selectedType);
+    initData.append('lat', lat);
+    initData.append('long', lng);
+    initData.append('rname', document.getElementById('rname').value);
+    initData.append('rphone', document.getElementById('rphone').value);
+
+    fetch('init_report.php', { method: 'POST', body: initData })
+      .then(r => r.json())
+      .then(d => {
+        if (d.status === 'success') {
+          currentUID = d.uid;
+          currentToken = d.authtok;
+          document.querySelector("#moreInfoForm [name='uid']").value = currentUID;
+          document.querySelector("#moreInfoForm [name='authtok']").value = currentToken;
+          closePopup('popupReporterInfo');
+          openPopup('popupMoreInfo');
+        } else {
+          alert('Init failed: ' + d.message);
+        }
+      })
+      .catch(e => alert('Init error'));
+  }
+
+  // 위치 정보 요청
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        proceedWithLocation(pos.coords.latitude, pos.coords.longitude);
+      },
+      (error) => {
+        console.warn('Location unavailable, proceeding without it.');
+        proceedWithLocation(null, null); // 위치 없이 진행
+      }
+    );
+  } else {
+    proceedWithLocation(null, null); // 위치 API 미지원 시에도 계속 진행
+  }
+});
 
   document.getElementById('moreInfoForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -313,7 +329,7 @@ function selectEmergency(type, buttonElement) {
     f.append('status', 'Canceled');
     fetch('cancel_report.php', { method: 'POST', body: f })
       .then(r => r.json())
-      .then(() => window.location.href = 'emergency.html')
+      .then(() => window.location.href = 'index.html')
       .catch(e => alert('Cancel error'));
   }
 

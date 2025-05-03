@@ -196,6 +196,10 @@
     background-color: #ececec;
     color: #333;
   }
+
+  .bold-button {
+    font-weight: bold;
+  }
 /*
 .popup { 
   width:95%!important; 

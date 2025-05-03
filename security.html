@@ -6,6 +6,7 @@
   <title>Event-aid</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="popup.css">
+  <script src="eventaid.js" defer></script>
 </head>
 
 <body>
@@ -36,9 +37,9 @@
         <span>HARASSMENT</span>
       </div> 
   
-      <div class="emergency-option" onclick="selectEmergency('Mission Person', this)">
+      <div class="emergency-option" onclick="selectEmergency('Missing Person', this)">
         <div class="icon-wrapper">
-          <img src="Assets/missing_person.svg" alt="mission Person Icon">
+          <img src="Assets/missing_person.svg" alt="Missing Person Icon">
         </div>
         <span>MISSING PERSON</span>
       </div>
@@ -145,9 +146,9 @@
         <h2>Additional Information</h2>
         <p>* Optional but helps security staff</p>
         <div class="popup-form-group">
-          <input type="text" name="oinfo" placeholder="Appearance of the person(s) involved">
-          <input type="text" name="threat" placeholder="Are they armed or threatening?">
-          <input type="text" name="group" placeholder="Number of people involved">
+          <input type="text" name="info" placeholder="Appearance of the person(s) involved">
+          <input type="text" name="details1" placeholder="Are they armed or threatening?">
+          <input type="text" name="details2" placeholder="Number of people involved">
         </div>
     </div>
     <div class="popup-buttons">
@@ -259,36 +260,50 @@ function selectEmergency(type, buttonElement) {
   function startReport() {
     if (!selectedType) return alert('Please select an emergency type first.');
     openPopup('popupReporterInfo');
+  }document.getElementById('reporterForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  function proceedWithLocation(lat, lng) {
+    const initData = new FormData();
+    initData.append('state', selectedState);
+    initData.append('etype', selectedType);
+    initData.append('lat', lat);
+    initData.append('long', lng);
+    initData.append('rname', document.getElementById('rname').value);
+    initData.append('rphone', document.getElementById('rphone').value);
+
+    fetch('init_report.php', { method: 'POST', body: initData })
+      .then(r => r.json())
+      .then(d => {
+        if (d.status === 'success') {
+          currentUID = d.uid;
+          currentToken = d.authtok;
+          document.querySelector("#moreInfoForm [name='uid']").value = currentUID;
+          document.querySelector("#moreInfoForm [name='authtok']").value = currentToken;
+          closePopup('popupReporterInfo');
+          openPopup('popupMoreInfo');
+        } else {
+          alert('Init failed: ' + d.message);
+        }
+      })
+      .catch(e => alert('Init error'));
   }
 
-  document.getElementById('reporterForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    navigator.geolocation.getCurrentPosition(pos => {
-      const initData = new FormData();
-      initData.append('state', selectedState);
-      initData.append('etype', selectedType);
-      initData.append('lat', pos.coords.latitude);
-      initData.append('long', pos.coords.longitude);
-      initData.append('rname', document.getElementById('rname').value);
-      initData.append('rphone', document.getElementById('rphone').value);
-
-      fetch('init_report.php', { method: 'POST', body: initData })
-        .then(r => r.json())
-        .then(d => {
-          if (d.status === 'success') {
-            currentUID = d.uid;
-            currentToken = d.authtok;
-            document.querySelector("#moreInfoForm [name='uid']").value = currentUID;
-            document.querySelector("#moreInfoForm [name='authtok']").value = currentToken;
-            closePopup('popupReporterInfo');
-            openPopup('popupMoreInfo');
-          } else {
-            alert('Init failed: ' + d.message);
-          }
-        })
-        .catch(e => alert('Init error'));
-    }, () => alert('Unable to get location'));
-  });
+  // 위치 정보 요청
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        proceedWithLocation(pos.coords.latitude, pos.coords.longitude);
+      },
+      (error) => {
+        console.warn('Location unavailable, proceeding without it.');
+        proceedWithLocation(null, null); // 위치 없이 진행
+      }
+    );
+  } else {
+    proceedWithLocation(null, null); // 위치 API 미지원 시에도 계속 진행
+  }
+});
 
   document.getElementById('moreInfoForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -309,7 +324,7 @@ function selectEmergency(type, buttonElement) {
     f.append('status', 'Canceled');
     fetch('cancel_report.php', { method: 'POST', body: f })
       .then(r => r.json())
-      .then(() => window.location.href = 'security.html')
+      .then(() => window.location.href = 'index.html')
       .catch(e => alert('Cancel error'));
   }
 
