@@ -7,29 +7,29 @@
   <link rel="stylesheet" href="styles.css">
   <script src="eventaid.js" defer></script>
 </head>
-
 <body>
+  <div class="background-image"></div> <!-- 배경 이미지용 div 추가 -->
 
-  <header><!--
+  <header class="dark-header">
+    <!--
     <button class="back-button" onclick="history.back()">
-    <img src="back.svg" alt="Back">
-  </button>-->
-  <img src="Assets/Logo.svg" alt="Event Aid Logo" class="logo">
-</header>
+      <img src="back.svg" alt="Back">
+    </button>
+    -->
+    <img src="Assets/Logo_black.svg" alt="Event Aid Logo" class="logo">
+  </header>
 
-
-  <div class="main-buttons">
+  <div class="main-buttons-home">
     <button onclick="window.location.href='https://ultramusicfestival.com'">Official website</button>
     <button onclick="alert('Map page not ready yet')">Map</button>
     <button onclick="alert('Other page not ready yet')">Other</button>
-    
   </div>
+
   <button class="fixed-emergency-btn" onclick="location.href='landing.html'">
     <img src="Assets/Voice_left.svg" alt="" class="icon">
     EMERGENCY
     <img src="Assets/Voice.svg" alt="" class="icon">
   </button>
-
 </body>
 </html>
 
