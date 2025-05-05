@@ -24,13 +24,10 @@ try {
   exit;
 }
 
-// POST parameters
-$state = $_POST['state'] ?? ''; // Life-Threatening, Non Life-Threatening, Security
-$etype = $_POST['etype'] ?? ''; // e.g. Bleeding, AED
-$lat   = isset($_POST['lat']) ? (float)$_POST['lat'] : null;
-$long  = isset($_POST['long']) ? (float)$_POST['long'] : null;
-$rname = $_POST['rname'] ?? '';
-$rphone = $_POST['rphone'] ?? '';
+// grab & validate POST
+$etype = $_POST['etype']   ?? '';
+$lat   = isset($_POST['lat'])  ? (float)$_POST['lat']   : null;
+$long  = isset($_POST['long']) ? (float)$_POST['long']  : null;
 
 if ($etype==='' || $lat===null || $long===null) {
   http_response_code(400);
@@ -38,36 +35,27 @@ if ($etype==='' || $lat===null || $long===null) {
   exit;
 }
 
-// convert type and priority
-$type = ($state === 'Security') ? 'Security' : (
-  ($state === 'Life-Threatening') ? 'Medical-Urgent' : 'Medical-General'
-);
-$priority = ($state === 'Life-Threatening') ? 'High' : (
-  ($state === 'Non Life-Threatening') ? 'Normal' : 'Normal'
-);
-
-// generate token
+// generate a random token
 $token = bin2hex(random_bytes(16));
 
-// insert into DB
-$sql = "INSERT INTO reports (authtok, type, priority, etype, lat, lng, name, phone)
-        VALUES (:tok, :type, :priority, :etype, :lat, :lng, :name, :phone)";
+// insert a new row; uid is auto‐increment
+$sql = "INSERT INTO reports
+          (authtok, etype, lat, `long`)
+        VALUES
+          (:tok, :etype, :lat, :long)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-  ':tok' => $token,
-  ':type' => $type,
-  ':priority' => $priority,
+  ':tok'   => $token,
   ':etype' => $etype,
-  ':lat' => $lat,
-  ':lng' => $long,
-  ':name' => $rname,
-  ':phone' => $rphone,
+  ':lat'   => $lat,
+  ':long'  => $long,
 ]);
 
+// fetch the new uid
 $uid = (int)$pdo->lastInsertId();
 
 echo json_encode([
-  'status' => 'success',
-  'uid' => $uid,
+  'status'  => 'success',
+  'uid'     => $uid,
   'authtok' => $token
 ]);

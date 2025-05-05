@@ -1,5 +1,4 @@
 <?php
-// DB 연결 설정
 $host = 'db5017669720.hosting-data.io';
 $dbname = 'dbs14130702';
 $user = 'dbu2702584';
@@ -29,7 +28,20 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
-  
+  <style>
+    .request-card.active-card {
+      background-color: #212121FF;
+    }
+    .report-contact.hidden {
+      display: none;
+    }
+    .report-contact {
+      font-size: 0.75rem;
+      color: #ddd;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+  </style>
 </head>
 
 <body>
@@ -37,33 +49,30 @@ try {
     <div id="map"></div>
   </div>
 
-  
   <div class="sidebar">
     <h2>Requests</h2>
-
-<div class="filter-bar">
-<label for="filterSelect">Sort by:</label>
-<select id="filterSelect" onchange="applyFilter()">
-  <option value="time">Time</option>
-  <option value="priority">Priority</option>
-</select>
-</div>
-
+    <div class="filter-bar">
+      <label for="filterSelect">Sort by:</label>
+      <select id="filterSelect" onchange="applyFilter()">
+        <option value="time">Time</option>
+        <option value="priority">Priority</option>
+      </select>
+    </div>
     <div class="request-list"></div>
-
     <div class="sidebar-footer">
-      <button onclick="alert('Completed list feature not implemented')">Completed</button>
+      <button onclick="revealContact()">Show Contact</button>
       <button onclick="window.location.href='export.php'">Download CSV</button>
     </div>
   </div>
 
-
-
   <script>
 let map;
+let activeMarker = null;
+let activeCard = null;
 let markers = [];
 let reportsData = [];
 let currentSort = 'time';
+let selectedUid = null;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -72,62 +81,56 @@ function initMap() {
     mapTypeId: 'roadmap'
   });
 
-  loadReports(); // 초기 호출
-  setInterval(loadReports, 5000); // 5초마다 자동 갱신
+  loadReports();
+  setInterval(loadReports, 5000);
 }
 
-// 시간 포맷 함수
 function formatTime(isoString) {
   const date = new Date(isoString);
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-// 색상 분류 함수
 function getColorByEtype(etype) {
-  if (!etype) return 'yellow';
-
-  const redList = ['Unconscious', 'Seizure', 'Substance Abuse', 'Other'];
+  const redList = ['Unconscious','Fainted', 'Seizure', 'Substance Abuse', 'Other'];
   const blueList = ['Missing Person', 'Harassment', 'Fighting'];
-
+  if (!etype) return 'yellow';
   if (redList.includes(etype)) return 'red';
   if (blueList.includes(etype)) return 'blue';
   return 'yellow';
 }
 
-// 필터 적용 함수
 function applyFilter() {
   const filter = document.getElementById('filterSelect').value;
   currentSort = filter;
-
   let sorted = [...reportsData];
-
   if (filter === 'priority') {
     const priorityOrder = { red: 1, yellow: 2, blue: 3 };
     sorted.sort((a, b) => {
-      const colorA = getColorByEtype(a.etype);
-      const colorB = getColorByEtype(b.etype);
-      return (priorityOrder[colorA] || 99) - (priorityOrder[colorB] || 99);
+      return (priorityOrder[getColorByEtype(a.etype)] || 99) - (priorityOrder[getColorByEtype(b.etype)] || 99);
     });
   } else {
     sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   }
-
   renderReports(sorted);
 }
 
-// 데이터 불러오기
 function loadReports() {
   fetch('get_reports.php')
     .then(res => res.json())
     .then(data => {
       reportsData = data;
-      applyFilter(); // 필터 기준에 따라 표시
+      applyFilter();
     });
 }
 
-// 카드 렌더링 함수
+function revealContact() {
+  if (activeCard) {
+    const contact = activeCard.querySelector('.report-contact');
+    if (contact) contact.classList.remove('hidden');
+  }
+}
+
 function renderReports(data) {
-  // 기존 마커 제거
   markers.forEach(m => m.setMap(null));
   markers = [];
 
@@ -135,49 +138,143 @@ function renderReports(data) {
   list.innerHTML = '';
 
   data.forEach(report => {
-    // 마커 추가
-    if (report.lat && report.long) {
-      const color = getColorByEtype(report.etype);
+    const lat = parseFloat(report.lat);
+    const lng = parseFloat(report.long);
+    const isValidLocation = lat && lng;
+    const color = getColorByEtype(report.etype);
 
+    const card = document.createElement('div');
+    card.className = `request-card ${color}`;
+    card.innerHTML = `
+      <div class="report-type"><strong>${report.etype?.toUpperCase() || 'UNKNOWN'}</strong></div>
+      <div class="tags">
+        ${report.info && report.info !== 'N/A' ? `<span>${report.info}</span>` : ''}
+        ${report.details1 && report.details1 !== 'N/A' ? `<span>${report.details1}</span>` : ''}
+        ${report.details2 && report.details2 !== 'N/A' ? `<span>${report.details2}</span>` : ''}
+        ${!isValidLocation ? `<span style="color: red;">⚠ No GPS </span>` : ''}
+      </div>
+      <div class="report-meta">
+        <div class="report-time">${formatTime(report.created_at)}</div>
+        <select class="status-dropdown" data-id="${report.uid}">
+          <option value="Pending" ${report.status === 'Pending' ? 'selected' : ''}>Pending</option>
+          <option value="Completed" ${report.status === 'Completed' ? 'selected' : ''}>Completed</option>
+          <option value="Dispatched" ${report.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+        </select>
+      </div>
+      ${(report.rname || report.phone) ? `
+      <div class="report-contact hidden">
+        ${report.rname ? `👤 ${report.rname}<br>` : ''}
+        ${report.phone ? `📞 ${report.phone}` : ''}
+      </div>` : ''}
+    `;
+
+    card.querySelector('.status-dropdown').addEventListener('change', (e) => {
+      const id = e.target.getAttribute('data-id');
+      const newStatus = e.target.value;
+      fetch('update_status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${encodeURIComponent(id)}&status=${encodeURIComponent(newStatus)}`
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.success) loadReports();
+        else alert('Status update failed');
+      });
+    });
+
+    if (isValidLocation) {
+      const position = new google.maps.LatLng(lat, lng);
       const marker = new google.maps.Marker({
-        position: { lat: parseFloat(report.lat), lng: parseFloat(report.long) },
-        map: map,
+        position,
+        map,
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 10,
           fillColor: color,
           fillOpacity: 0.8,
           strokeWeight: 0
-        }
+        },
+        zIndex: 1
+      });
+      markers.push(marker);
+
+      marker.addListener('click', () => {
+        card.click();
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
 
-      markers.push(marker);
+      card.onclick = () => {
+        if (activeCard === card) {
+          card.classList.remove('active-card');
+          if (activeMarker && activeMarker.originalColor) {
+            activeMarker.setIcon({
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 10,
+              fillColor: activeMarker.originalColor,
+              fillOpacity: 0.8,
+              strokeWeight: 0
+            });
+          }
+          document.querySelectorAll('.report-contact').forEach(el => el.classList.add('hidden'));
+          activeCard = null;
+          activeMarker = null;
+          selectedUid = null;
+          return;
+        }
+
+        document.querySelectorAll('.request-card').forEach(c => c.classList.remove('active-card'));
+        document.querySelectorAll('.report-contact').forEach(el => el.classList.add('hidden'));
+        card.classList.add('active-card');
+        const contact = card.querySelector('.report-contact');
+        if (contact) contact.classList.remove('hidden');
+        activeCard = card;
+        selectedUid = report.uid;
+
+        map.panTo(position);
+        setTimeout(() => {
+          map.setZoom(19);
+        }, 300);
+
+        if (activeMarker && activeMarker.originalColor) {
+          activeMarker.setIcon({
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: activeMarker.originalColor,
+            fillOpacity: 0.8,
+            strokeWeight: 0
+          });
+        }
+
+        marker.originalColor = color;
+        marker.setIcon({
+          url: '../Assets/pin.svg',
+          scaledSize: new google.maps.Size(48, 48),
+          anchor: new google.maps.Point(24, 24),
+          zIndex: google.maps.Marker.MAX_ZINDEX + 1000
+        });
+        activeMarker = marker;
+      };
+
+      if (report.uid === selectedUid) {
+        card.classList.add('active-card');
+        card.querySelector('.report-contact')?.classList.remove('hidden');
+        activeCard = card;
+        marker.originalColor = color;
+        marker.setIcon({
+          url: '../Assets/pin.svg',
+          scaledSize: new google.maps.Size(48, 48),
+          anchor: new google.maps.Point(24, 24),
+          zIndex: google.maps.Marker.MAX_ZINDEX + 1000
+        });
+        activeMarker = marker;
+      }
     }
 
-    // 카드 추가
-    const card = document.createElement('div');
-    card.className = `request-card ${getColorByEtype(report.etype)}`;
-    card.innerHTML = `
-  <div class="report-type"><strong>${report.etype ? report.etype.toUpperCase() : 'UNKNOWN'}</strong></div>
- <div class="tags">
-  ${report.info && report.info !== 'N/A' ? `<span>${report.info}</span>` : ''}
-  ${report.details1 && report.details1 !== 'N/A' ? `<span>${report.details1}</span>` : ''}
-  ${report.details2 && report.details2 !== 'N/A' ? `<span>${report.details2}</span>` : ''}
-</div>
-  <div class="report-meta">
-    <div class="report-time">${formatTime(report.created_at)}</div>
-    <div class="status">${report.status}</div>
-  </div>
-`;
     list.appendChild(card);
   });
 }
-</script>
-
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZPcXdktuxgglm7tC4IkiHK2LMxpPfv4&callback=initMap"></script>
-
-
-
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZPcXdktuxgglm7tC4IkiHK2LMxpPfv4&callback=initMap"></script>
 </body>
 </html>

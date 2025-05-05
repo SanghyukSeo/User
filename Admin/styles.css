@@ -41,7 +41,7 @@
     width: 360px;
     background-color: #1a1a1a;
     color: white;
-    padding: 2em;
+    padding: 1em;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -131,11 +131,55 @@
     align-items: center; /* 중앙 정렬 */
     margin-top: 6px;
   }
+  .report-contact.hidden {
+    display: none;
+  }
+  .report-contact {
+    font-size: 0.75rem;
+    color: #ccc;
+    margin-top: 4px;
+    line-height: 1.2;
+  }
   
+  .status-dropdown {
+    font-size: 14px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+  }
+  .active-card {
+    background-color: #f0f0f0;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-right: 1px solid #333;
+  }
+/* ✅ 마커 팝업 */
+.popup {
+    z-index: 1000;
+    transform: translate(-50%, -100%);
+  }
   
-
-
-
+  .popup-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  
+  .popup-box button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
 
   /* 📱 모바일 대응 */
   @media (max-width: 768px) {
