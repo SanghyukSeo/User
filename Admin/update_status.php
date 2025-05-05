@@ -21,15 +21,16 @@ try {
 
   $id = $_POST['id'] ?? null;
   $status = $_POST['status'] ?? null;
+  $note = $_POST['note'] ?? null;
 
   if (!$id || !$status) {
     echo json_encode(['success' => false, 'error' => 'Missing id or status']);
     exit;
   }
 
-  // 🔴 여기서 id → uid 로 수정
-  $stmt = $pdo->prepare("UPDATE reports SET status = ? WHERE uid = ?");
-  $stmt->execute([$status, $id]);
+  // ✅ 상태 및 관리자 메모 업데이트
+  $stmt = $pdo->prepare("UPDATE reports SET status = ?, admin_note = ? WHERE uid = ?");
+  $stmt->execute([$status, $note, $id]);
 
   echo json_encode(['success' => true]);
 } catch (Exception $e) {
